@@ -11,6 +11,7 @@ const ShowMeals:React.FC = () => {
     const location = useLocation();
     const [meals, setMeals] = useState<ApiMeal[]>([]);
     const[loading,setLoading] = useState(false);
+    const [delLoading, setDelLoading] = useState<string | null>(null);
 
     const fetchMeal = useCallback( async ()=>{
         try {
@@ -36,9 +37,10 @@ const ShowMeals:React.FC = () => {
             void fetchMeal();
         }
     }, [fetchMeal,location]);
+
     const deleteMeal = async (id: string) => {
         try {
-            setLoading(true);
+            setDelLoading(id);
             if (window.confirm('Are you sure you want to delete this meal?')) {
                 await axiosApi.delete(`/meals/${id}.json`);
                 toast.success('Meal deleted!');
@@ -47,7 +49,7 @@ const ShowMeals:React.FC = () => {
         }catch (e){
             toast.error('Could not delete this meal!');
         }finally {
-            setLoading(false);
+            setDelLoading(null);
         }
     }
 
@@ -81,9 +83,12 @@ const ShowMeals:React.FC = () => {
                                 <span>{meal.kcal} kcal</span>
                             </div>
                             <div className="col-1">
-                                <button className="btn btn-danger" onClick={() => deleteMeal(meal.id)}
-                                        disabled={loading}>
-                                    {loading && <ButtonSpinner/>}
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={() => deleteMeal(meal.id)}
+                                    disabled={delLoading === meal.id}
+                                >
+                                    {delLoading === meal.id && <ButtonSpinner />}
                                     Delete
                                 </button>
                             </div>

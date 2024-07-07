@@ -88,7 +88,9 @@ const MutateMeal:React.FC<Props> = ({existingMeal}) => {
                         toast.error('Error created!');
                     }
                 }
-                navigate('/');
+                if (!id) {
+                    navigate('/');
+                }
             } catch (e) {
                 console.error('Error happened!', e);
             } finally {
