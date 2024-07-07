@@ -1,4 +1,5 @@
 export interface ApiMeal {
+    id: string;
     timeMeal: string;
     descriptionDishes:string;
     kcal: number;

@@ -2,6 +2,7 @@ import {ApiMeal, MealMutation} from "../../types";
 import {useNavigate, useParams} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import axiosApi from "../../AxiosApi";
+import ButtonSpinner from "../Spiner/ButtonSpiner";
 
 interface Props{
     existingMeal?:ApiMeal;
@@ -100,7 +101,7 @@ const MutateMeal:React.FC<Props> = ({existingMeal}) => {
                 >
                     <option value="">Select meal time</option>
                     {TimeMealCategories.map(category => (
-                        <option key={category.id} value={category.id}>
+                        <option key={category.id} value={category.title}>
                             {category.title}
                         </option>
                     ))}
@@ -126,7 +127,10 @@ const MutateMeal:React.FC<Props> = ({existingMeal}) => {
                     onChange={onFieldChange}
                     placeholder="Content"
                 />
-                <button type="submit" disabled={isLoading}>
+                <button type="submit"
+                        className="btn btn-primary mt-2"
+                        disabled={isLoading}>
+                    {isLoading && <ButtonSpinner/>}
                     Save
                 </button>
             </form>
