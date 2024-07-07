@@ -19,6 +19,8 @@ function App() {
                />
                <Route path='/new-meal' element={<MutateMeal/>}
                />
+                <Route path='/edit-meal/:id' element={<MutateMeal/>}
+                />
                <Route path="*" element={<h1>Not found!</h1>} />
             </Routes>
 

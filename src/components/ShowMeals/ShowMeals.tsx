@@ -4,6 +4,8 @@ import * as React from "react";
 import {useCallback, useEffect, useState} from "react";
 import axiosApi from "../../AxiosApi";
 import Spinner from "../Spiner/Spinner";
+import {toast} from "react-toastify";
+import ButtonSpinner from "../Spiner/ButtonSpiner";
 
 const ShowMeals:React.FC = () => {
     const location = useLocation();
@@ -34,12 +36,31 @@ const ShowMeals:React.FC = () => {
             void fetchMeal();
         }
     }, [fetchMeal,location]);
+    const deleteMeal = async (id: string) => {
+        try {
+            setLoading(true);
+            if (window.confirm('Are you sure you want to delete this meal?')) {
+                await axiosApi.delete(`/meals/${id}.json`);
+                toast.success('Meal deleted!');
+                await fetchMeal();
+            }
+        }catch (e){
+            toast.error('Could not delete this meal!');
+        }finally {
+            setLoading(false);
+        }
+    }
+
+    const totalKcal=meals.reduce((sum,ApiMeal)=> {
+        return sum  + ApiMeal.kcal;
+    },0);
+
     return (
         <>
             <div className="row col-12 d-flex align-items-center mb-5">
                 <span className="col-6 text-start">
                     Total Calories:
-                    <strong> {}kcal</strong>
+                    <strong> {totalKcal} kcal</strong>
                 </span>
                 <div className="col-6 text-end">
                     <Link to='/new-meal' className="btn btn-primary">Add new meal</Link>
@@ -48,8 +69,9 @@ const ShowMeals:React.FC = () => {
             {loading ? (
                 <Spinner/>
             ) : (
+                meals.length > 0 ? (
                 meals.map((meal) => (
-                    <div className="card col-12" key={meal.id}>
+                    <div className="card col-12 mb-2" key={meal.id}>
                         <div className="row d-flex align-items-center">
                             <div className="col-5">
                                 <h4>{meal.timeMeal}</h4>
@@ -59,14 +81,21 @@ const ShowMeals:React.FC = () => {
                                 <span>{meal.kcal} kcal</span>
                             </div>
                             <div className="col-1">
-
+                                <button className="btn btn-danger" onClick={() => deleteMeal(meal.id)}
+                                        disabled={loading}>
+                                    {loading && <ButtonSpinner/>}
+                                    Delete
+                                </button>
                             </div>
-                            <div className="col-1">
-
-                            </div>
+                            <Link className="btn btn-primary col-1" to={`/edit-meal/${meal.id}`}>
+                                Edit
+                            </Link>
                         </div>
                     </div>
                 ))
+                ) : (
+                    <h1>Страница еды пуста</h1>
+                )
             )}
         </>
     );

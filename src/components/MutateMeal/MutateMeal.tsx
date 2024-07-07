@@ -3,6 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import axiosApi from "../../AxiosApi";
 import ButtonSpinner from "../Spiner/ButtonSpiner";
+import {toast} from "react-toastify";
 
 interface Props{
     existingMeal?:ApiMeal;
@@ -73,11 +74,20 @@ const MutateMeal:React.FC<Props> = ({existingMeal}) => {
                     kcal: parseFloat(mealMutation.kcal),
                 };
                 if (id) {
-                    await axiosApi.put(`/meals/${id}.json`, postData);
+                   try{
+                       await axiosApi.put(`/meals/${id}.json`, postData);
+                       toast.success('Meal updated.');
+                   } catch (e){
+                       toast.error('Error Update!');
+                   }
                 } else {
-                    await axiosApi.post('/meals.json', postData);
+                    try {
+                        await axiosApi.post('/meals.json', postData);
+                        toast.success('Meal created.');
+                    }catch (e){
+                        toast.error('Error created!');
+                    }
                 }
-
                 navigate('/');
             } catch (e) {
                 console.error('Error happened!', e);
