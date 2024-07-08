@@ -1,5 +1,5 @@
 import {Link, useLocation} from "react-router-dom";
-import {ApiMeal, ApiMeals} from "../../types";
+import { ApiMeals, Meal} from "../../types";
 import React, {useCallback, useEffect, useState} from "react";
 import axiosApi from "../../AxiosApi";
 import Spinner from "../Spiner/Spinner";
@@ -8,7 +8,7 @@ import ButtonSpinner from "../Spiner/ButtonSpiner";
 
 const ShowMeals:React.FC = () => {
     const location = useLocation();
-    const [meals, setMeals] = useState<ApiMeal[]>([]);
+    const [meals, setMeals] = useState<Meal[]>([]);
     const[loading,setLoading] = useState(false);
     const [delLoading, setDelLoading] = useState<string | null>(null);
 
