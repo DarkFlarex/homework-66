@@ -1,20 +1,18 @@
-export interface ApiMeal {
+export interface Meal {
     id: string;
     timeMeal: string;
-    descriptionDishes:string;
+    descriptionMeal:string;
     kcal: number;
 }
+
+export type ApiMeal = Omit<Meal, 'id'>;
 
 export interface ApiMeals{
     [id:string]: ApiMeal;
 }
 
-export interface Meal extends ApiMeal{
-    id:string;
-}
-
 export interface MealMutation{
     timeMeal: string;
-    descriptionDishes:string;
+    descriptionMeal:string;
     kcal: string;
 }

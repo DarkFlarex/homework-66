@@ -1,7 +1,6 @@
 import {Link, useLocation} from "react-router-dom";
 import {ApiMeal, ApiMeals} from "../../types";
-import * as React from "react";
-import {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import axiosApi from "../../AxiosApi";
 import Spinner from "../Spiner/Spinner";
 import {toast} from "react-toastify";
@@ -77,7 +76,7 @@ const ShowMeals:React.FC = () => {
                         <div className="row d-flex align-items-center">
                             <div className="col-5">
                                 <h4>{meal.timeMeal}</h4>
-                                <span>{meal.descriptionDishes}</span>
+                                <span>{meal.descriptionMeal}</span>
                             </div>
                             <div className="col-5">
                                 <span>{meal.kcal} kcal</span>
