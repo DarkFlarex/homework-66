@@ -47,7 +47,7 @@ const MealForm: React.FC<Props> = ({ onSubmit, existingMeal, isLoading = false }
     };
 
     return (
-        <div className="MutateMeal bg-light p-3 text-start rounded">
+        <div className="bg-light p-3 text-start rounded">
             <h1>{existingMeal ? 'Edit Meal' : 'Add New Meal'}</h1>
             <form className="MutateMealForm d-flex flex-column align-items-start justify-content-center"
                   onSubmit={onFormSubmit}>

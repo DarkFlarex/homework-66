@@ -72,14 +72,14 @@ const ShowMeals:React.FC = () => {
             ) : (
                 meals.length > 0 ? (
                 meals.map((meal) => (
-                    <div className="card col-12 mb-2" key={meal.id}>
+                    <div className="card col-12 mb-2 p-5" key={meal.id}>
                         <div className="row d-flex align-items-center">
-                            <div className="col-5">
+                            <div className="col-8">
                                 <h4>{meal.timeMeal}</h4>
-                                <span>{meal.descriptionMeal}</span>
+                                <span className="fw-bolder">{meal.descriptionMeal}</span>
                             </div>
-                            <div className="col-5">
-                                <span>{meal.kcal} kcal</span>
+                            <div className="col-2">
+                                <span><strong>{meal.kcal} kcal</strong></span>
                             </div>
                             <div className="col-1">
                                 <button
